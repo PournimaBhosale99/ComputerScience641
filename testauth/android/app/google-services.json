@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "699505347319",
+    "project_id": "test-auth-f032b",
+    "storage_bucket": "test-auth-f032b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699505347319:android:37e6b6a9ca7412a44921f2",
+        "android_client_info": {
+          "package_name": "com.pournima.testauth"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzrERx-7f50WCdzh0iyFRLcxo46066TsY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
