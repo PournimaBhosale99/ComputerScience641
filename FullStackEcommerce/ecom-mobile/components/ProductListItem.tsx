@@ -9,19 +9,21 @@ import { Text } from "@/components/ui/text"
 
 export default function ProductListItem({product}){
     return (
-        <Card className="p-5 rounded-lg max-w-[360px] m-3">
+        <Card className="p-5 rounded-lg max-w-[360px] m-3 flex-1">
         <Image
           source={{
             uri: product.image,
           }}
           className="mb-6 h-[240px] w-full rounded-md"
+          alt = {'${product.name} image'}
+          resizeMode="contain"
         />
         <Text className="text-sm font-normal mb-2 text-typography-700">
           {product.name}
         </Text>
         <VStack className="mb-6">
           <Heading size="md" className="mb-4">
-            {product.price}
+            ${product.price}
           </Heading>
           <Text size="sm">
             {product.description}
