@@ -7,10 +7,21 @@ import { Button, ButtonText } from "@/components/ui/button"
 import { Image } from "@/components/ui/image"
 import { Stack, useLocalSearchParams } from "expo-router"
 import products from "@/assets/products.json"
+import { useCart } from "@/store/cartStore"
 
 
 export default function ProductDetailScreen(){
     const {id} = useLocalSearchParams <{id : string}> ();
+
+    const addProduct = useCart((state) => state.addProduct);
+    const cartItems = useCart(state => state.items);
+    console.log(JSON.stringify(cartItems, null, 2));
+
+
+    const addToCart = () => {
+      addProduct(product);
+    }
+
     const product = products.find((p)=>p.id === Number(id))
     if (!product){
         return(<Text>Product not found</Text>)
@@ -40,7 +51,7 @@ export default function ProductDetailScreen(){
           </Text>
          </VStack>
         <Box className="flex-col sm:flex-row">
-          <Button className="px-4 py-2 mr-0 mb-3 sm:mr-3 sm:mb-0 sm:flex-1">
+          <Button onPress={addToCart} className="px-4 py-2 mr-0 mb-3 sm:mr-3 sm:mb-0 sm:flex-1">
             <ButtonText size="sm">Add to cart</ButtonText>
           </Button>
           <Button
