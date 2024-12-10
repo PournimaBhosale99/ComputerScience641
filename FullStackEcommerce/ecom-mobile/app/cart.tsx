@@ -15,6 +15,13 @@ export default function HomeScreen(){
         resetCart();
     };
 
+    const calculateTotal = () => {
+        return items.reduce((total, item) => {
+          return total + item.product.price * item.quantity;
+        }, 0).toFixed(2);
+      };
+    
+
     if(items.length === 0){
         return <Redirect href={'/'}/>
     }
@@ -35,12 +42,27 @@ export default function HomeScreen(){
                     </HStack> 
             )}
 
-        ListFooterComponent={()=> (
+ /*       ListFooterComponent={()=> (
             <Button onPress={onCheckout}>
                 <ButtonText>Checkout</ButtonText>
             </Button>
-        )}
-            />
+        )} */
+
+            ListFooterComponent={() => (
+                <VStack>
+                  {/* Total Section */}
+                  <HStack style={{ justifyContent: "space-between", width: "100%", paddingHorizontal: 16 }}>
+                    <Text style={{ fontWeight: "bold", fontSize: 16 }}>Total:</Text>
+                    <Text style={{ fontWeight: "bold", fontSize: 16 }}>${calculateTotal()}</Text>
+                  </HStack>
+                  {/* Checkout Button */}
+                  <Button onPress={onCheckout}>
+                    <ButtonText>Checkout</ButtonText>
+                  </Button>
+                  
+                </VStack>
+              )}
+            /> 
         
     );
 }

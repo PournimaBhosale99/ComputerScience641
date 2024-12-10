@@ -88,6 +88,7 @@ export default function ProductDetailScreen() {
   const [product, setProduct] = useState(null);
   const addProduct = useCart((state) => state.addProduct);
   const cartItems = useCart(state => state.items);
+  const addToWishlist = useCart((state) => state.addToWishlist);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -133,6 +134,7 @@ export default function ProductDetailScreen() {
           </Button>
           <Button
             variant="outline"
+            onPress={() => addToWishlist(product)}
             className="px-4 py-2 border-outline-300 sm:flex-1"
           >
             <ButtonText size="sm" className="text-typography-600">
