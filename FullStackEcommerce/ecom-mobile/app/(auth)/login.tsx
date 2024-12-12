@@ -109,11 +109,11 @@ import { Text } from "@/components/ui/text";
 import { Input, InputField, InputIcon, InputSlot } from "@/components/ui/input";
 import { EyeIcon, EyeOffIcon } from "lucide-react-native";
 import { Button, ButtonText } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
 import { HStack } from "@/components/ui/hstack";
 import { auth } from "@/config/firebaseConfig"; // Import Firebase auth
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged  } from "firebase/auth";
 import { Alert } from "react-native";
 import { Redirect ,useRouter} from "expo-router";
 
@@ -121,6 +121,7 @@ export default function LoginScreen() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [currentUser, setCurrentUser] = useState(null); // State to store current user info
     const router = useRouter();
     const handleState = () => {
         setShowPassword((showState) => !showState);
@@ -145,13 +146,31 @@ export default function LoginScreen() {
         }
     };
 
+     // Monitor authentication state
+     useEffect(() => {
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+          if (user) {
+              // User is signed in, update the current user state
+              setCurrentUser(user);
+          } else {
+              // User is signed out
+              setCurrentUser(null);
+          }
+      });
+
+      // Cleanup subscription on component unmount
+      return unsubscribe;
+  }, []);
+
     
     return (
         <FormControl className='p-4 border rounded-lg mx-w-[500px] border-outline-300 bg-white m-2'>
             <VStack space='xl'>
                 <Heading className='text-typography-900 leading-3 pt-3'>
-                    Login
+                {currentUser ? `Welcome, ${currentUser.email}` : "Login"}
                 </Heading>
+                {!currentUser && (
+                  <>
                 <VStack space='xs'>
                     <Text className='text-typography-500 leading-1'>
                         Email
@@ -192,6 +211,17 @@ export default function LoginScreen() {
                         </ButtonText>
                     </Button>
                 </HStack>
+                </>
+              )}
+
+              {currentUser && (
+                    <Button className='flex-1' onPress={() => auth.signOut()}>
+                        <ButtonText className='text-typography-0'>
+                            Sign Out
+                        </ButtonText>
+                    </Button>
+                )}
+
             </VStack>
         </FormControl>
     );

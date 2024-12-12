@@ -12,8 +12,8 @@ const { withNativeWind } = require('nativewind/metro');
 const config = getDefaultConfig(__dirname);
 
 config.server = {
-    experimentalImportSupport: false,
-    enableBridge: true, // Enable the classic bridge explicitly
+    //experimentalImportSupport: false,
+   // enableBridge: true, // Enable the classic bridge explicitly
 };
 
 module.exports = withNativeWind(config, { input: './global.css' });

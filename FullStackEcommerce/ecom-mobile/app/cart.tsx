@@ -5,14 +5,16 @@ import { FlatList } from "react-native";
 import { HStack } from "@/components/ui/hstack";
 import { VStack } from "@/components/ui/vstack";
 import { Button, ButtonText } from "@/components/ui/button";
-import { Redirect } from "expo-router";
+import { useRouter,Redirect } from "expo-router";
 
 export default function HomeScreen(){
 
     const items = useCart((state) => state.items);
     const resetCart = useCart((state) => state.resetCart);
+    const router = useRouter();
     const onCheckout = async () => {
         resetCart();
+        router.push("/");
     };
 
     const calculateTotal = () => {
@@ -23,7 +25,7 @@ export default function HomeScreen(){
     
 
     if(items.length === 0){
-        return <Redirect href={'/'}/>
+        return <Text>Your cart is empty!</Text>
     }
 
     return (
